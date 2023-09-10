@@ -10,6 +10,7 @@ from sub_routines import ThreadTwo as Two
 from sub_routines import ThreadThree as Three
 from sub_routines import ThreadFour as Four
 from data_storage import data as d
+from data_storage import commands as cmd
 
 #=======================================================================================================#
 # Worker Threads                                                                                        #
@@ -105,7 +106,13 @@ class UI(QMainWindow):
 # Handle the return signals from the threads                                                            #
 #=======================================================================================================#
     def handle_ThreadOne(self, value):
-        self.BatteryLevel.setValue(d.battery_level)
+        if self is not None:
+            if value == True:
+                cmd.SERVER_ON = True
+                print("handle_ThreadOne Returned True")
+            else:
+                cmd.SERVER_ON = True
+                print("handle_ThreadOne Returned False")
 
     def handle_ThreadTwo(self, value):
         if self is not None:

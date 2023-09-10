@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from sub_routines import MB_server as s
 from data_storage import coils as c
-from data_storage import registers as r
+from data_storage import registers as rs
 
 #=======================================================================================================#
 class ThreadRun(QObject):
@@ -13,7 +13,13 @@ class ThreadRun(QObject):
         self.running = True
 
     def start(self):
-        s.start_server()
+        if self.button_pressed == True:
+            self.running = False
+            s.start_server()
+        else:
+            self.button_pressed = False
+            self.running = True
+
         self.return_signal.emit(self.button_pressed)
 
 #=======================================================================================================#

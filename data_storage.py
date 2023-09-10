@@ -7,3 +7,6 @@ class registers:
 
 class coils:
     pass
+
+class commands:
+    SERVER_ON = False
