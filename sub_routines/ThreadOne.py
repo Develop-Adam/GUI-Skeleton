@@ -11,6 +11,7 @@ class ThreadRun(QObject):
         self.running = True
 
     def start(self):
+        d.battery_level = d.battery_level + 1
         self.return_signal.emit(self.button_pressed)
 
 #=======================================================================================================#

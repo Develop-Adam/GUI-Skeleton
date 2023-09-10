@@ -105,11 +105,7 @@ class UI(QMainWindow):
 # Handle the return signals from the threads                                                            #
 #=======================================================================================================#
     def handle_ThreadOne(self, value):
-        if self is not None:
-            if value == True:
-                print("handle_ThreadOne Returned True")
-            else:
-                print("handle_ThreadOne Returned False")
+        self.BatteryLevel.setValue(d.battery_level)
 
     def handle_ThreadTwo(self, value):
         if self is not None:
