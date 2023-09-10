@@ -1,5 +1,7 @@
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
-from data_storage import data as d
+from sub_routines import MB_server as s
+from data_storage import coils as c
+from data_storage import registers as r
 
 #=======================================================================================================#
 class ThreadRun(QObject):
@@ -11,7 +13,7 @@ class ThreadRun(QObject):
         self.running = True
 
     def start(self):
-        d.battery_level = d.battery_level + 1
+        s.start_server()
         self.return_signal.emit(self.button_pressed)
 
 #=======================================================================================================#
