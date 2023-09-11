@@ -38,7 +38,7 @@ class ThreadTwo(QThread):
         self.commands_instance.return_signal.connect(self.emit_signal)
 
     def run(self):
-        self.commands_instance.lid()
+        self.commands_instance.start()
 
     def emit_signal(self, status):
         self.return_signal.emit(status)
@@ -99,35 +99,30 @@ class UI(QMainWindow):
 
         # Connect the signals to the slots
         self.pushButton.clicked.connect(self.ThreadOne.start)
+        self.pushButton_2.clicked.connect(self.ThreadTwo.start)
 
         self.show()
 
 #=======================================================================================================#
 # Handle the return signals from the threads                                                            #
 #=======================================================================================================#
-    def handle_ThreadOne(self, value):
+    def handle_ThreadOne(self, status):
         if self is not None:
-            if value == True:
+            if status == True:
                 cmd.SERVER_ON = True
-                print("handle_ThreadOne Returned True")
+                self.pushButton.setText("Stop Server")
             else:
-                cmd.SERVER_ON = True
-                print("handle_ThreadOne Returned False")
+                cmd.SERVER_ON = False
+                self.pushButton.setText("Start Server")
 
-    def handle_ThreadTwo(self, value):
-        if self is not None:
-            if value == True:
-                print("handle_ThreadTwo Returned True")
-            else:
-                print("handle_ThreadTwo Returned False")
+    def handle_ThreadTwo(self, status):
+        if status is not None:
+            self.BatteryLevel.setValue(d.battery_level)
+            print(f'Battery Level: {d.battery_level}')
 
     def handle_ThreadThree(self, value):
         if self is not None:
-            if value == True:
-                if value == True:
-                    print("handle_ThreadThree Returned True")
-                else:
-                    print("handle_ThreadThree Returned False")
+            pass
 
     def handle_ThreadFour(self, value):
         if self is not None:

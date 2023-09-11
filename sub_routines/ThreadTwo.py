@@ -1,6 +1,9 @@
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from data_storage import data as d
+from pyModbusTCP.client import ModbusClient
+import time
 
+C = ModbusClient(host='localhost', port=12345, auto_open=True, debug=False)
 #=======================================================================================================#
 class ThreadRun(QObject):
     return_signal = pyqtSignal(bool)
@@ -11,7 +14,11 @@ class ThreadRun(QObject):
         self.running = True
 
     def start(self):
-        self.return_signal.emit(self.button_pressed)
+        while True:
+            REGISTER_ADDRESS = 0
+            d.battery_level = C.read_holding_registers(REGISTER_ADDRESS, 1)[0]
+            self.return_signal.emit(self.button_pressed)
+            time.sleep(1)
 
 #=======================================================================================================#
 class ThreadStart(QThread):
